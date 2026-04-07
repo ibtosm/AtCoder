@@ -13,7 +13,6 @@ print($ret)
 ######description######
 # print(INF⇒-1)
 ######body######
-ret =
 print(-1 if $ret == INF else $ret)
 ######prefix######
 # print(2INF⇒-1)
@@ -67,7 +66,6 @@ def fstr(x): return f'{x:.10f}'
 ######description######
 # outputYesNo
 ######body######
-ret =
 print('Yes' if $ret else 'No')
 ######prefix######
 # print(5yesno)

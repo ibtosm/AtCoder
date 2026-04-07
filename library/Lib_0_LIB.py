@@ -54,12 +54,21 @@ from heapq import heappop, heappush
 ##############end##############
 
 ##############name##############
-# atcoder lib
+# atcoder lib _ fenwicktree
 ######description######
-# atcoder lib
+# ACL_fenwicktree
 ######body######
 from atcoder.fenwicktree import FenwickTree
+######prefix######
+# from atcoder.fenwicktree
+##############end##############
+
+##############name##############
+# atcoder lib _ DSU
+######description######
+# ACL_DSU
+######body######
 from atcoder.dsu import DSU
 ######prefix######
-# from atcoder
+# from atcoder.dsu
 ##############end##############

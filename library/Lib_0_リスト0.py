@@ -62,7 +62,7 @@ def move(cur:tuple, d:tuple) -> None|tuple:
 
     if (0 <= next0 < H) and (0 <= next1 < W):
         return (next0, next1)
-    return None
+    return (None, None)
 
 ######prefix######
 # directions4
