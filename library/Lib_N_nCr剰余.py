@@ -11,11 +11,11 @@
 
 
 #####################################
-# nCr % 10**9+7
+# nCr % 998244353
 # http://zakii.la.coocan.jp/enumeration/10_balls_boxes.htm
 #####################################
 class Combination:
-    def __init__(self, maxn:int=10**6, mod:int=1000000007) -> None:
+    def __init__(self, maxn:int=10**6, mod:int=998244353) -> None:
         self.mod = mod
         self.maxn = maxn
         _maxn = maxn + 1
@@ -41,11 +41,11 @@ ret = cmb.nCr(4, 2)
 
 #####################################
 # nは大きいが固定で,rは小さい場合
-# nCr % 10**9+7  n～10^9 r～10^5
+# nCr % 998244353  n～10^9 r～10^5
 # nは大きいが固定で,rは小さい場合
 #####################################
 class CombinationSmallR:
-    def __init__(self, n:int=10**9, mod:int=1000000007) -> None:
+    def __init__(self, n:int=10**9, mod:int=998244353) -> None:
         self.n = n
         self.max_r = 1
         self.mod = mod
