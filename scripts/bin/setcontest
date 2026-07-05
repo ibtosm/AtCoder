@@ -1,2 +1,2 @@
-#!/usr/bin/env bash
+#!/usr/bin/zsh
 python3 -m scripts.commands.set_contest "$@"

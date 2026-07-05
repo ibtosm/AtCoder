@@ -2,11 +2,8 @@
 __pycache__/
 *.pyc
 
-# PyPy
-pypycache/
-
-# Rust
-target/
-
 # work
 .work/
+
+# venv
+.venv/
