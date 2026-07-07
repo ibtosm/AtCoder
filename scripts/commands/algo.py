@@ -6,8 +6,9 @@ import subprocess
 import sys
 from pathlib import Path
 
-from ..config.config_loader import ENCODING, PATHS, load_config_tomlkit, KEY_CONTESTID
-from tomlkit import parse
+from ..config.config_loader import ENCODING, KEY_CONTESTID, PATHS, load_config_tomlkit
+
+# from tomlkit import parse
 
 
 CONTESTID = load_config_tomlkit()[KEY_CONTESTID]
@@ -57,7 +58,6 @@ def download_testcases(task: Task, task_dir: Path) -> None:
         os.chdir(original_dir)
 
 
-
 def prepare_script(task: Task) -> bool:
     target_script = PATHS.WORK / f"{task.taskid}.py"
     no_script = not target_script.exists()
@@ -74,6 +74,7 @@ def prepare_script(task: Task) -> bool:
 
     subprocess.run(["zed", str(target_script)], check=True)
     return no_script
+
 
 def run_tests(task: Task, task_dir: Path) -> None:
     print(f"🧪 テスト実行: {task.taskid}")
@@ -92,22 +93,39 @@ def run_tests(task: Task, task_dir: Path) -> None:
         os.chdir(original_dir)
 
 
+def run_submit(task: Task, task_dir: Path) -> None:
+    print(f"🧪 提出: {task.taskid}")
+    main_script = task_dir / "main.py"
+    target_script = PATHS.WORK / f"{task.taskid}.py"
+    shutil.copy(target_script, main_script)
+
+    original_dir = Path.cwd()
+    try:
+        os.chdir(task_dir)
+        subprocess.run(
+            ["oj", "submit", task.url, "main.py", "-l", "6082"],
+            # ["acc", "submit","-t", task.url, "main.py"],
+            check=False,
+        )
+    finally:
+        os.chdir(original_dir)
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="ジョブとタスクを指定するスクリプト")
     parser.add_argument("task", help="タスク名/url")
-
-    if len(sys.argv) < 2:
-        parser.print_usage()
-        print("\n❌ エラー: 引数がありません。")
-        sys.exit(1)
+    parser.add_argument("-s", "--submit", action="store_true", help="submit オプション")
 
     args = parser.parse_args()
 
     task = Task(args.task)
-
     task_dir = prepare_task_dir(task)
+
+    if args.submit:
+        run_submit(task, task_dir)
+
+        return
+
     no_answer = prepare_script(task)
     download_testcases(task, task_dir)
 

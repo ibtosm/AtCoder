@@ -6,21 +6,21 @@
 - サンプルケースを取得して、テンプレート準備
 - サンプルケースのテストを実行
 
-```sh
-$ atc https://atcoder.jp/contests/abc234/tasks/abc234_a
+```zsh
+$ algo https://atcoder.jp/contests/abc234/tasks/abc234_a
 ```
 
 ## On contest
 - tool/contest_id.txt の中身を変える
-```sh
+```zsh
 $ set_contest abc234
 ```
 
 
 - コンテスト中
 ```sh
-$ atc a
-$ atc b
+$ algo a
+$ algo b
 ...
-$ atc f
+$ algo f
 ```
