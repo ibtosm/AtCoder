@@ -8,9 +8,6 @@ from pathlib import Path
 
 from ..config.config_loader import ENCODING, KEY_CONTESTID, PATHS, load_config_tomlkit
 
-# from tomlkit import parse
-
-
 CONTESTID = load_config_tomlkit()[KEY_CONTESTID]
 template_path = PATHS.TEMPLATE_ALGO_PY
 
