@@ -34,8 +34,8 @@ PI = 3.141592653589793
 # alphabet
 ######body######
 ALPS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'; alps = 'abcdefghijklmnopqrstuvwxyz'
-def alp(i, base='a'): return chr(ord(base) + i%26)    # i=0->'a', i=25->'z'
-def alpind(a, base='a'): return ord(a)-ord(base)
+def alp(i, base='a')->str: return chr(ord(base) + i%26)    # i=0->'a', i=25->'z'
+def alpind(a, base='a')->int: return ord(a)-ord(base)
 ######prefix######
 # alphabet
 ##############end##############

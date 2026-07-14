@@ -4,7 +4,7 @@
 # 複数の文字列を変換
 ######body######
 s = '54IZSB'
-ts = s.translate(str.maketrans("BSI","123"))
+ts:str= s.translate(str.maketrans("BSI","123"))
 print(ts)
 # 543Z21
 ######prefix######

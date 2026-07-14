@@ -20,7 +20,7 @@
 class LCS:
     def __init__(self, S, T) -> None:
         self.Type = type(S)
-        if self.Type == str:
+        if self.Type is str:
             S = list(S)
             T = list(T)
         self.S = S
@@ -58,7 +58,7 @@ class LCS:
                 # このとき s[i-1] == t[j-1] なので、t[j-1] + res でも OK
                 i -= 1; j -= 1   # DP の遷移を遡る
         ret = ret[::-1]
-        if self.Type == str: ret = ''.join(ret)
+        if self.Type is str: ret = ''.join(ret)
         return ''.join(ret)
 
 

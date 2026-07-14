@@ -65,8 +65,8 @@ A = list(map(int, input().split()))
 ######description######
 # edges
 ######body######
-G = [[] for _ in range($N)]
-for _ in range($M):
+G = [[] for _ in range(${1:N})]
+for _ in range(${2:M}):
     a, b = map(int, input().split())
     a -= 1; b -= 1
     G[a].append(b)
@@ -81,8 +81,8 @@ for _ in range($M):
 ######description######
 # edges(重み付き)
 ######body######
-G = [[] for _ in range($N)]
-for _ in range($M):
+G = [[] for _ in range(${1:N})]
+for _ in range(${2:M}):
     a, b, w = map(int, input().split())
     a -= 1; b -= 1
     G[a].append((b, w))
@@ -93,11 +93,21 @@ for _ in range($M):
 ##############end##############
 
 ##############name##############
-# 0インデックス
+# 0インデックスa, b
 ######description######
-# 0-indexed
+# 0-indexed a, b
 ######body######
 a -= 1; b -= 1
 ######prefix######
 # a -= 1; b -= 1
+##############end##############
+
+##############name##############
+# 0インデックスx, y
+######description######
+# 0-indexed x, y
+######body######
+x -= 1; y -= 1
+######prefix######
+# x -= 1; y -= 1
 ##############end##############

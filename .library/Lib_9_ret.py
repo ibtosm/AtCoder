@@ -1,69 +1,82 @@
 ##############name##############
-# intinput
+# print(ret)
 ######description######
-# int型でのinput
+# print(ret)
 ######body######
-int(input())
+print(${1:ret})
 ######prefix######
-# intinput
+# priret0
 ##############end##############
 
 ##############name##############
-# inputsplit
+# print(INF⇒-1)
 ######description######
-# inputをsplit
+# print(INF⇒-1)
 ######body######
-input().split()
+print(-1 if ${1:ret} == INF else ${1:ret})
 ######prefix######
-# inputsplit
+# priret1
 ##############end##############
 
 ##############name##############
-# mapint
+# YesNo
 ######description######
-# int型で複数数値のinput
+# YesNo
 ######body######
-map(int, input().split())
+print('Yes' if ${1:ret} else 'No')
 ######prefix######
-# mapintinput
+# priret2
+##############end##############
+
+
+##############name##############
+# print('\n'.join(map, str(ret)))
+######description######
+# print('\n'.join(map, str(ret)))
+######body######
+print('\n'.join(map(str, ${1:ret})))
+######prefix######
+# priret3
 ##############end##############
 
 ##############name##############
-# listmapint
+# print("".join(ret))
 ######description######
-# int型でlistのinput
+# print("".join(ret))
 ######body######
-list(map(int, input().split()))
+print(''.join(${1:ret}))
 ######prefix######
-# listmapintinput
+# priret4
 ##############end##############
 
 ##############name##############
-# tuplemapint
+# rounded
 ######description######
-# int型でtupleのinput
+# rounded10
 ######body######
-tuple(map(int, input().split()))
+def fstr(x):
+    return f"{x:.10f}"
+print(fstr(${1:ret}))
+
 ######prefix######
-# tuplemapintinput
+# priret5
 ##############end##############
 
-##############name##############
-# matrixintinput
-######description######
-# int型でmatrixのinput
-######body######
-[list(map(int, input().split())) for _ in range($N)
-######prefix######
-# [listmapint
-##############end##############
+
 
 ##############name##############
-# matrixstrinput
+# interactive i/o
 ######description######
-# 文字列でmatrixのinput
+# interactive
 ######body######
-[list(input()) for _ in range($N)
+def req(${1:question}):
+    print(f"? {${1:question}}", flush=True)
+    return input()
+
+def ans(${2:ret}):
+    print(f"! {${2:ret}}", flush=True)
+    return
+
 ######prefix######
-# [input()
+# interactive
 ##############end##############

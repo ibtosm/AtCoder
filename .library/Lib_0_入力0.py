@@ -1,72 +1,69 @@
 ##############name##############
-# output0
+# intinput
 ######description######
-# print(ret)
+# int型でのinput
 ######body######
-print($ret)
+int(input())
 ######prefix######
-# print(0ret)
+# intinput
 ##############end##############
 
 ##############name##############
-# output2
+# inputsplit
 ######description######
-# print(INF⇒-1)
+# inputをsplit
 ######body######
-print(-1 if $ret == INF else $ret)
+input().split()
 ######prefix######
-# print(2INF⇒-1)
+# inputsplit
 ##############end##############
 
 ##############name##############
-# output3
+# mapint
 ######description######
-# print(3'\n'.join(map)
+# int型で複数数値のinput
 ######body######
-print('\n'.join(map(str, $ret)))
+map(int, input().split())
 ######prefix######
-# print(3'\n'.join(map(str)
+# mapintinput
 ##############end##############
 
 ##############name##############
-# output4
+# listmapint
 ######description######
-# print("".join)
+# int型でlistのinput
 ######body######
-print(''.join($ret))
+list(map(int, input().split()))
 ######prefix######
-# print(4''.join(ret))
-##############end##############
-
-
-##############name##############
-# output interactive
-######description######
-# interactive
-######body######
-def req($ret): print($ret, flush=True)
-
-######prefix######
-# print(6interactive)
+# listmapintinput
 ##############end##############
 
 ##############name##############
-# output7
+# tuplemapint
 ######description######
-# rounded
+# int型でtupleのinput
 ######body######
-def fstr(x): return f'{x:.10f}'
-
+tuple(map(int, input().split()))
 ######prefix######
-# print(7roundeds)
+# tuplemapintinput
 ##############end##############
 
 ##############name##############
-# outputYesNo
+# matrixintinput
 ######description######
-# outputYesNo
+# int型でmatrixのinput
 ######body######
-print('Yes' if $ret else 'No')
+[list(map(int, input().split())) for _ in range(${1:N})]
 ######prefix######
-# print(5yesno)
+# llistmapint
+##############end##############
+
+##############name##############
+# matrixstrinput
+######description######
+# 文字列でmatrixのinput
+######body######
+[list(input()) for _ in range(${1:N})]
+######prefix######
+# linput()
 ##############end##############

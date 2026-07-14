@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import shutil
 from dataclasses import dataclass, field
 from enum import Enum
 from pathlib import Path
@@ -181,7 +182,8 @@ def write_snippets(collection: SnippetCollection, output_path: Path) -> None:
 def main() -> str:
     collection = collect_snippets(PATHS.LIBRARY)
     write_snippets(collection, PATHS.SNIPPETS)
-    return f"✅ Snippets generated: {PATHS.SNIPPETS}"
+    shutil.copy(PATHS.SNIPPETS, PATHS.SNIPPETSLOC)
+    return f"✅ Snippets generated: {PATHS.SNIPPETS} {PATHS.SNIPPETSLOC}"
 
 
 if __name__ == "__main__":

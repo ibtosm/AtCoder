@@ -55,6 +55,7 @@ class ProjectPaths:
     CONFIG: Path
     CONFIG_TOML: Path
     SNIPPETS: Path
+    SNIPPETSLOC: Path
     WORK: Path
     TEMPLATES: Path
     TEMPLATE_ALGO_PY: Path
@@ -75,8 +76,9 @@ PATHS = ProjectPaths(
     HTML_OUTPUT_FILE=ROOT / "docs" / "index.html",
     PAGES=ROOT / "pages",
     HTML_TEMPLATE_FILE=ROOT / "pages" / "templates" / "template.html",
-    LIBRARY=ROOT / "library",
-    SNIPPETS=Path("/mnt/c/Users/eieib/AppData/Roaming/Zed/snippets/python.json"),
+    LIBRARY=ROOT / ".library",
+    SNIPPETS=ROOT / ".vscode" / "python.json",
+    SNIPPETSLOC=Path("/mnt/c/Users/eieib/AppData/Roaming/Zed/snippets/python.json"),
     WORK=ROOT / ".work",
     TEMPLATES=ROOT / "templates",
     TEMPLATE_ALGO_PY=ROOT / "templates" / "template_algo.py",

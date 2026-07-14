@@ -21,16 +21,13 @@
 # https://atcoder.jp/contests/abc386/tasks/abc386_f
 
 class Levenshtein:
-    def __init__(self, S, T) -> None:
+    def __init__(self, S:str|list, T:str|list) -> None:
         self.Type = type(S)
-        if self.Type == str:
-            S = list(S)
-            T = list(T)
-        self.S = S
-        self.T = T
-        self.ls = len(S)
-        self.lt = len(T)
-        self.INF = max(self.ls, self.lt) + 1
+        self.S:list = list(S) if self.Type is str S
+        self.T:list = list(T) if self.Type is str T
+        self.ls:int = len(S)
+        self.lt:int = len(T)
+        self.INF :int= max(self.ls, self.lt) + 1
 
     def distance(self):
         """O(|S||T|)"""
@@ -68,8 +65,7 @@ class Levenshtein:
                 i-=1
                 j-=1   # DP の遷移を遡る
         ret = ret[::-1]
-        if self.Type == str: ret = ''.join(ret)
-        return ret
+        return ''.join(ret) if self.Type is str else ret
 
     def islowerK(self, K):
         """distance <= K"""
