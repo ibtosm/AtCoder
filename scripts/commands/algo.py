@@ -69,7 +69,8 @@ def prepare_script(task: Task) -> bool:
         with open(target_script, "w", encoding=ENCODING) as f:
             f.writelines(lines)
 
-    subprocess.run(["zed", str(target_script)], check=True)
+    subprocess.run(["zed", "-a", str(target_script)], check=True)
+    # subprocess.run(["zed", str(target_script)], check=True)
     return no_script
 
 
