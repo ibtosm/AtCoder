@@ -5,7 +5,7 @@
 ######body######
 print(${1:ret})
 ######prefix######
-# priret0
+# printret0
 ##############end##############
 
 ##############name##############
@@ -15,7 +15,7 @@ print(${1:ret})
 ######body######
 print(-1 if ${1:ret} == INF else ${1:ret})
 ######prefix######
-# priret1
+# printret1
 ##############end##############
 
 ##############name##############
@@ -25,7 +25,7 @@ print(-1 if ${1:ret} == INF else ${1:ret})
 ######body######
 print('Yes' if ${1:ret} else 'No')
 ######prefix######
-# priret2
+# printret2
 ##############end##############
 
 
@@ -36,7 +36,7 @@ print('Yes' if ${1:ret} else 'No')
 ######body######
 print('\n'.join(map(str, ${1:ret})))
 ######prefix######
-# priret3
+# printret3
 ##############end##############
 
 ##############name##############
@@ -46,7 +46,7 @@ print('\n'.join(map(str, ${1:ret})))
 ######body######
 print(''.join(${1:ret}))
 ######prefix######
-# priret4
+# printret4
 ##############end##############
 
 ##############name##############
@@ -59,7 +59,7 @@ def fstr(x):
 print(fstr(${1:ret}))
 
 ######prefix######
-# priret5
+# printret5
 ##############end##############
 
 

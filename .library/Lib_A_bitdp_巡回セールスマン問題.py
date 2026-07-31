@@ -12,7 +12,7 @@ N, M = map(int, input().split())
 dist: list[list[int]] = [[INF] * N for _ in range(N)]
 for fm in range(N):
     dist[fm][fm] = 0
-for _ in range(m):
+for _ in range(M):
     fm, to, d = map(int, input().split())
     fm -= 1
     to -= 1

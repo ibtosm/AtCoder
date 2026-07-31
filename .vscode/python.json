@@ -2692,7 +2692,7 @@
             "dist: list[list[int]] = [[INF] * N for _ in range(N)]",
             "for fm in range(N):",
             "    dist[fm][fm] = 0",
-            "for _ in range(m):",
+            "for _ in range(M):",
             "    fm, to, d = map(int, input().split())",
             "    fm -= 1",
             "    to -= 1",
@@ -6920,7 +6920,7 @@
     },
     "print(ret)": {
         "prefix": [
-            "priret0"
+            "printret0"
         ],
         "body": [
             "print(${1:ret})"
@@ -6932,7 +6932,7 @@
     },
     "print(INF⇒-1)": {
         "prefix": [
-            "priret1"
+            "printret1"
         ],
         "body": [
             "print(-1 if ${1:ret} == INF else ${1:ret})"
@@ -6944,7 +6944,7 @@
     },
     "YesNo": {
         "prefix": [
-            "priret2"
+            "printret2"
         ],
         "body": [
             "print('Yes' if ${1:ret} else 'No')"
@@ -6956,7 +6956,7 @@
     },
     "print('\\n'.join(map, str(ret)))": {
         "prefix": [
-            "priret3"
+            "printret3"
         ],
         "body": [
             "print('\\n'.join(map(str, ${1:ret})))"
@@ -6968,7 +6968,7 @@
     },
     "print(\"\".join(ret))": {
         "prefix": [
-            "priret4"
+            "printret4"
         ],
         "body": [
             "print(''.join(${1:ret}))"
@@ -6980,7 +6980,7 @@
     },
     "rounded": {
         "prefix": [
-            "priret5"
+            "printret5"
         ],
         "body": [
             "def fstr(x):",
