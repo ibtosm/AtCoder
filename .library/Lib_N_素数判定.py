@@ -38,6 +38,7 @@ print(31, is_prime(31))
 
 from random import randint as ri
 
+
 def miller_rabin(N, Times=10):
     if N == 2: return True
     if N == 1 or N%2 == 0: return False
@@ -67,8 +68,8 @@ for _ in range(int(input())):
 
 
 ##############################
-# 素数出力 O(n**0.5)
-# n <= 10**5
+# 素数出力 O(n log log n)
+# n <= 10**7
 ##############################
 def get_primes(n:int) -> list:
 # n以下の素数列挙

@@ -16,6 +16,7 @@
 ######body######
 from atcoder.dsu import DSU
 
+
 class Kruskal:
     def __init__(self, n:int, G:list)->None:
         self.n = n
