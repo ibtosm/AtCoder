@@ -14,6 +14,7 @@
 
 from atcoder.segtree import SegTree as SegTreeACL
 
+
 class SegTree(SegTreeACL):
     def __init__(self, op, e, v) -> None:
         super().__init__(op, e, v)
@@ -26,18 +27,19 @@ class SegTree(SegTreeACL):
         """
         return ' '.join(map(str, (self[i] for i in range(self._n))))
 
-    def debug(self) -> None:
+    def debug(self) -> str:
         strs = ["e" if x == self._e else str(x) for x in self._d] + [f"({i})" for i in range(self._n)]
         minsize = max(len(s) for s in strs[self._size:])
         result = ["|"] * (self._log + 2)
         level = 0
         next_level = 2
+        width = 0
         for i in range(1, len(strs)):
             if i == next_level:
                 level += 1
                 next_level <<= 1
             if level < self._log + 1:
-                width = ((minsize + 1) << (self._log - level)) - 1
+                width:int = ((minsize + 1) << (self._log - level)) - 1
             result[level] += strs[i].center(width) + "|"
         return "\n".join(result)
 

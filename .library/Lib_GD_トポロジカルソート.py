@@ -1,7 +1,8 @@
 ######title######
 # トポロジカルソート
 ######subtitle######
-# 有向非巡回グラフ（DAG）の各ノードを順序付けして、どのノードもその出力辺の先のノードより前にくるように並べることである。
+# 有向非巡回グラフ（DAG）の各ノードを順序付けして、
+# どのノードもその出力辺の先のノードより前にくるように並べることである。
 # 有向非巡回グラフは必ずトポロジカルソートすることができる。
 # totplogical_sort(ノード数, 隣接グラフ):
 # .build(sorttype): sorttype = 'appear' 出たとこ順、 = 'nodeid' ノード番号順
@@ -12,94 +13,104 @@
 # トポロジカルソート topologicalsort
 ######body######
 
-from collections import deque
 
 class topological_sort:
-    def __init__(self, n:int, G) -> None:
-        self.n = n
-        self.ts = []            # トポロジカルソート
-        self.parents = [-1] * n # 親 -1は根
-        self.G = G              # 辺
-        self.in_cnt = [0] * n   # 入力
-        self.node_zero = []     # ゼロ次のノード
-        for i, gi in enumerate(G):
-            for j, _ in gi:
-                self.in_cnt[j] += 1
-        self.node_zero = [i for i in range(self.n) if self.in_cnt[i] == 0]
+    def _nv(self, nvw) -> int:
+        return nvw if type(nvw) == int else nvw[0]
 
+    def __init__(self, N: int, G: list[list]) -> None:
+        """
+        self.ts: 各ノードのトポロジカル順の番号
+        self.parents: 各ノードの親
+        self.in_cnt: 入力の辺の数
+        self.node_zero: ゼロ次のノード
+        """
+
+        self.N: int = N
+        self.ts: list[int] = []
+        self.parents: list[int] = [-1] * N
+        self.G: list[list] = G
+        self.in_cnt: list[int] = [0] * N
+        for gv in G:
+            for nvw in gv:
+                nv: int = self._nv(nvw)
+                self.in_cnt[nv] += 1
+        self.node_zero: list[int] = [i for i in range(N) if self.in_cnt[i] == 0]
 
     def _build_sort_by_appear(self) -> None:
-        q = self.node_zero[:]
-        q = deque(q)
-        while q:
-            p = q.popleft()
-            self.ts.append(p)
-            for nxt, _ in self.G[p]:
-                self.in_cnt[nxt] -= 1
-                if self.in_cnt[nxt] == 0:
-                    q.append(nxt)
-                    self.parents[nxt] = p
+        from collections import deque
 
+        self.ts = []
+        que: deque[int] = deque(self.node_zero[:])
+        while que:
+            v: int = que.popleft()
+            self.ts.append(v)
+            for nvw in self.G[v]:
+                nv: int = self._nv(nvw)
+                self.in_cnt[nv] -= 1
+                if self.in_cnt[nv] == 0:
+                    que.append(nv)
+                    self.parents[nv] = v
 
     def _build_sort_by_nodeid(self) -> None:
         from heapq import heapify, heappop, heappush
-        q = self.node_zero[:]
-        heapify(q)
-        while q:
-            p = heappop(q)
-            self.ts.append(p)
-            for nxt, nxtw in self.G[p]:
-                self.in_cnt[nxt] -= 1
-                if self.in_cnt[nxt] == 0:
-                    heappush(q, nxt)
-                    self.parents[nxt] = p
 
+        self.ts = []
+        que: list[int] = self.node_zero[:]
+        heapify(que)
+        while que:
+            v: int = heappop(que)
+            self.ts.append(v)
+            for nvw in self.G[v]:
+                nv: int = self._nv(nvw)
+                self.in_cnt[nv] -= 1
+                if self.in_cnt[nv] == 0:
+                    heappush(que, nv)
+                    self.parents[nv] = v
 
-    def build(self, sorttype='appear'):
-        self.ts = []            # トポロジカルソート
-        if sorttype == 'appear':        # 出たとこ順番
+    def build(self, sorttype="appear"):
+        if sorttype == "appear":  # 出たとこ順番
             self._build_sort_by_appear()
-        elif sorttype == 'nodeid':      # ノードの順番
+        elif sorttype == "nodeid":  # ノードの順番
             self._build_sort_by_nodeid()
-
 
     @property
     def is_dag(self) -> bool:
-        return len(self.ts)==self.n
+        return len(self.ts) == self.N
         # True 閉路なしDAG
         # False 閉路あり
 
-
     @property
     def is_unique(self) -> bool:
-        if not self.is_dag: return False
-        for i in range(self.n-1):
-            u, v = self.ts[i:i+2]
-            if not v in self.G[u]: return False
+        if not self.is_dag:
+            return False
+        for i in range(self.N - 1):
+            v, nv = self.ts[i : i + 2]
+            if not nv in self.G[v]:
+                return False
         return True
         # True トポロジカルソートの経路が一意
         # False 複数あり
 
 
 #########################################
-# n, m = map(int, input().split())
-n = int(input())
-G = [[] for _ in range(n)]
-m = n
-for _ in range(m):
+N, M = map(int, input().split())
+G = [[] for _ in range(N)]
+for _ in range(M):
     a, b = map(int, input().split())
-    a -= 1; b -= 1
+    # a -= 1
+    # b -= 1
     w = 0
-    G[a].append(b)
+    G[a].append((b, w))
 
-ts = topological_sort(n, G)
+ts = topological_sort(N, G)
 
 ts.build()
 
-print(ts.ts)
-print(ts.parents)
-print(ts.is_dag)
-print(ts.is_unique)
+print("\n".join(map(str, ts.ts)))
+# print(ts.parents)
+# print(ts.is_dag)
+# print(ts.is_unique)
 
 ######prefix######
 # Lib_GD_トポロジカルソート_topologicalsort
