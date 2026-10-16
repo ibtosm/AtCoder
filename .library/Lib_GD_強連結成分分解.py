@@ -11,25 +11,28 @@
 ######body######
 from atcoder.scc import SCCGraph as _SCCG
 
+
 class SCCGraph(_SCCG):
     def __init__(self, n):
         super().__init__(n)
-        self.n = None       # 連結成分の個数
-        self.ids = None     # nodeが、どのグループに属するか
-        self.groups = None  # グループに属するもとのnode
-        self.G = None       # 縮約後の隣接リスト
+        self.n = 0              # 連結成分の個数
+        self.ids = []           # nodeが、どのグループに属するか(idsはトポロジカルソートされている)
+        self.groups = []        # グループに属するもとのnode
+        self.G:list[set] = []   # 縮約後の隣接リスト
+
 
     def scc(self):
         n, ids = self._internal.scc_ids()
-        groups = [[] for _ in range(n)]
+        groups:list[list[int]] = [[] for _ in range(n)]
         for i in range(self._internal._n):
             groups[ids[i]].append(i)
-        self.n = n
-        self.ids = ids
-        self.groups = groups
+        self.n:int = n
+        self.ids:list[int] = ids
+        self.groups:list[list[int]] = groups
         return n, ids, groups
 
-    def dag(self):
+
+    def dag(self) -> list[set[int]]:
         self.G = [set() for _ in range(self.n)]
         for fm, to in self._internal._edges:
             fm = self.ids[fm]; to = self.ids[to]
