@@ -10,6 +10,7 @@
 ######body######
 #####################################
 from itertools import groupby
+
 strings = "aabbbbbbbbbbbba"
 strings = [1,3,4,1,1,1,5,5,7]
 

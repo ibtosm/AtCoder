@@ -15,8 +15,9 @@
 ######description######
 # 削除機能付きHeapque
 ######body######
+from heapq import heapify, heappop, heappush
 
-from heapq import heapify, heappush, heappop
+
 class Heapq:
     def __init__(self, a=None):
         self.q = a if a else []
@@ -51,8 +52,10 @@ class Heapq:
 ######description######
 # 削除機能付きMaxMinheapque
 ######body######
-from heapq import heappush, heappop
 from collections import defaultdict
+from heapq import heappop, heappush
+
+
 class DeletableMaxMinHeapq():
     def __init__(self):
         self.Hma = []

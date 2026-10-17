@@ -11,6 +11,7 @@
 ######body######
 from bisect import bisect_left, bisect_right
 
+
 class RangeSearchQuery:
     """
     二次元点のリストで範囲を指定して、含まれる要素番号を出力する

@@ -987,7 +987,7 @@
         "description": [],
         "scope": "python"
     },
-    "n=intinput": {
+    "N = int(input())": {
         "prefix": [
             "nin"
         ],
@@ -995,11 +995,11 @@
             "N = int(input())"
         ],
         "description": [
-            "整数nの読み込み"
+            "整数Nの読み込み"
         ],
         "scope": "python"
     },
-    "nainput": {
+    "N = / A =": {
         "prefix": [
             "nain"
         ],
@@ -1008,11 +1008,11 @@
             "A = list(map(int, input().split()))"
         ],
         "description": [
-            "整数nの読み込み"
+            "整数N, リストAの読み込み"
         ],
         "scope": "python"
     },
-    "s=input": {
+    "S=input()": {
         "prefix": [
             "sin"
         ],
@@ -1020,25 +1020,37 @@
             "S = list(input())"
         ],
         "description": [
-            "文字列sの読み込み"
+            "文字列Sの読み込み"
         ],
         "scope": "python"
     },
-    "n,m=map(int, input().split())": {
+    "N, M =": {
         "prefix": [
-            "n, m=map"
+            "nmin"
         ],
         "body": [
             "N, M = map(int, input().split())"
         ],
         "description": [
-            "整数n, mの読み込み"
+            "整数N, Mの読み込み"
         ],
         "scope": "python"
     },
-    "h,w=map(int, input().split())": {
+    "N, Q =": {
         "prefix": [
-            "h, w=map"
+            "nqin"
+        ],
+        "body": [
+            "N, Q = map(int, input().split())"
+        ],
+        "description": [
+            "整数N, Qの読み込み"
+        ],
+        "scope": "python"
+    },
+    "H, W =": {
+        "prefix": [
+            "hwin"
         ],
         "body": [
             "H, W = map(int, input().split())"
@@ -1048,12 +1060,24 @@
         ],
         "scope": "python"
     },
-    "a=list(map(int, input().split()))": {
+    "A=list(map(int, input().split()))": {
         "prefix": [
-            "a =list"
+            "ain"
         ],
         "body": [
             "A = list(map(int, input().split()))"
+        ],
+        "description": [
+            "リストの読み込み"
+        ],
+        "scope": "python"
+    },
+    "B=list(map(int, input().split()))": {
+        "prefix": [
+            "bin"
+        ],
+        "body": [
+            "B = list(map(int, input().split()))"
         ],
         "description": [
             "リストの読み込み"
@@ -1117,6 +1141,18 @@
         ],
         "description": [
             "0-indexed x, y"
+        ],
+        "scope": "python"
+    },
+    "0インデックスu, v": {
+        "prefix": [
+            "u -= 1; v -= 1"
+        ],
+        "body": [
+            "u -= 1; v -= 1"
+        ],
+        "description": [
+            "0-indexed u, v"
         ],
         "scope": "python"
     },
@@ -2916,8 +2952,9 @@
             "Lib_D_heapque_min"
         ],
         "body": [
+            "from heapq import heapify, heappop, heappush",
             "",
-            "from heapq import heapify, heappush, heappop",
+            "",
             "class Heapq:",
             "    def __init__(self, a=None):",
             "        self.q = a if a else []",
@@ -2953,8 +2990,10 @@
             "Lib_D_heapque_minmax"
         ],
         "body": [
-            "from heapq import heappush, heappop",
             "from collections import defaultdict",
+            "from heapq import heappop, heappush",
+            "",
+            "",
             "class DeletableMaxMinHeapq():",
             "    def __init__(self):",
             "        self.Hma = []",
@@ -3674,6 +3713,8 @@
         "body": [
             "",
             "from bisect import bisect_left",
+            "",
+            "",
             "class Compress:",
             "    \"\"\"一次元座標圧縮",
             "",
@@ -3737,6 +3778,8 @@
         ],
         "body": [
             "from bisect import bisect_left",
+            "",
+            "",
             "class Compress:",
             "    INF = 10**10",
             "    def __init__(self, points, spacing=False, reverse=False):",
@@ -4113,18 +4156,18 @@
         ],
         "scope": "python"
     },
-    "query read": {
+    "read query": {
         "prefix": [
-            "query read"
+            "read query"
         ],
         "body": [
             "for _ in range(Q):",
             "    f, *que = map(int, input().split())",
             "    match f:",
             "        case 1:",
-            "            ${1:...}",
+            "            ${1:...} = que",
             "        case 2:",
-            "            ${2:...}",
+            "            ${2:...} = que",
             ""
         ],
         "description": [
@@ -5331,6 +5374,7 @@
         "body": [
             "#####################################",
             "from itertools import groupby",
+            "",
             "strings = \"aabbbbbbbbbbbba\"",
             "strings = [1,3,4,1,1,1,5,5,7]",
             "",
@@ -6680,6 +6724,7 @@
         ],
         "body": [
             "from bisect import bisect_left, bisect_right",
+            "",
             "",
             "class RangeSearchQuery:",
             "    \"\"\"",

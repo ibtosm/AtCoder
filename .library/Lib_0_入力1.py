@@ -1,18 +1,17 @@
 ##############name##############
-# n=intinput
+# N = int(input())
 ######description######
-# 整数nの読み込み
+# 整数Nの読み込み
 ######body######
 N = int(input())
 ######prefix######
 # nin
 ##############end##############
 
-
 ##############name##############
-# nainput
+# N = / A =
 ######description######
-# 整数nの読み込み
+# 整数N, リストAの読み込み
 ######body######
 N = int(input())
 A = list(map(int, input().split()))
@@ -21,9 +20,9 @@ A = list(map(int, input().split()))
 ##############end##############
 
 ##############name##############
-# s=input
+# S=input()
 ######description######
-# 文字列sの読み込み
+# 文字列Sの読み込み
 ######body######
 S = list(input())
 ######prefix######
@@ -31,34 +30,55 @@ S = list(input())
 ##############end##############
 
 ##############name##############
-# n,m=map(int, input().split())
+# N, M =
 ######description######
-# 整数n, mの読み込み
+# 整数N, Mの読み込み
 ######body######
 N, M = map(int, input().split())
 ######prefix######
-# n, m=map
+# nmin
 ##############end##############
 
 ##############name##############
-# h,w=map(int, input().split())
+# N, Q =
+######description######
+# 整数N, Qの読み込み
+######body######
+N, Q = map(int, input().split())
+######prefix######
+# nqin
+##############end##############
+
+##############name##############
+# H, W =
 ######description######
 # 整数h, wの読み込み
 ######body######
 H, W = map(int, input().split())
 ######prefix######
-# h, w=map
+# hwin
 ##############end##############
 
 ##############name##############
-# a=list(map(int, input().split()))
+# A=list(map(int, input().split()))
 ######description######
 # リストの読み込み
 ######body######
 A = list(map(int, input().split()))
 ######prefix######
-# a =list
+# ain
 ##############end##############
+
+##############name##############
+# B=list(map(int, input().split()))
+######description######
+# リストの読み込み
+######body######
+B = list(map(int, input().split()))
+######prefix######
+# bin
+##############end##############
+
 
 ##############name##############
 # edges
@@ -110,4 +130,14 @@ a -= 1; b -= 1
 x -= 1; y -= 1
 ######prefix######
 # x -= 1; y -= 1
+##############end##############
+
+##############name##############
+# 0インデックスu, v
+######description######
+# 0-indexed u, v
+######body######
+u -= 1; v -= 1
+######prefix######
+# u -= 1; v -= 1
 ##############end##############

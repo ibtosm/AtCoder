@@ -11,6 +11,8 @@
 ######body######
 
 from bisect import bisect_left
+
+
 class Compress:
     """一次元座標圧縮
 
@@ -73,6 +75,8 @@ class Compress:
 # 座標圧縮二次元
 ######body######
 from bisect import bisect_left
+
+
 class Compress:
     INF = 10**10
     def __init__(self, points, spacing=False, reverse=False):
