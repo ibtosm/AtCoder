@@ -1,7 +1,7 @@
 ##############name##############
-# Diameter
+# Diameter重み付き
 ######description######
-# 木の直径
+# 木の直径重み付き
 ######body######
 
 from collections import deque
@@ -60,5 +60,5 @@ print(tree_heights(n, G))
 
 
 ######prefix######
-# Lib_GT_木の直径
+# Lib_GT_木の直径_weighted
 ##############end##############

@@ -1,11 +1,7 @@
-##############name##############
-# Diameter
-######description######
-# 木の直径
-######body######
-
+import sys
 from collections import deque
-from typing import Any
+
+sys.setrecursionlimit(1000_000_000)
 
 
 def _bfs(n, G, root=0):
@@ -41,13 +37,14 @@ def tree_diameter(n, G) -> tuple[int, int, int, list[int], list[int]]:
 
 
 def tree_heights(n, G):
+    """各頂点から最遠頂点までの距離"""
     u, *_ = _bfs(n, G, root=0)
     v, _, depthu, _ = _bfs(n, G, root=u)
     _, __, depthv, __ = _bfs(n, G, root=v)
     return [max(x, y) for x, y in zip(depthu, depthv)]
 
 
-def tree_centre(n, G):
+def tree_centre(n, G) -> tuple[int, tuple[int, int]]:
     """木の中心"""
     """diam:直径の長さ"""
     """centre:中心のノード"""
@@ -70,27 +67,28 @@ def count_diameter(n, G):
     countは直径の本数
     """
 
-    def _dfs(x, p, d, r) -> tuple[int, int]:
+    diam, (cu, cv) = tree_centre(n, G)
+
+    radius: int = diam // 2
+
+    def _dfs_1(x, p, d):
         nodecount = 1
-        farthestleaf = d == r
+        farthestleaf = d == radius
         for nx in G[x]:
             if nx == p:
                 continue
-            u, v = _dfs(nx, x, d + 1, r)
+            u, v = _dfs_1(nx, x, d + 1)
             nodecount += u
             farthestleaf += v
         return nodecount, farthestleaf
 
-    diam, (cu, cv) = tree_centre(n, G)
-
-    r: int = diam // 2
     cnt: list[tuple[int, int]] = []
     if cu == cv:
         for nx in G[cu]:
-            cnt.append(_dfs(nx, cu, 1, r))
+            cnt.append(_dfs_1(nx, cu, 1))
     else:
-        cnt.append(_dfs(cu, cv, 0, r))
-        cnt.append(_dfs(cv, cu, 0, r))
+        cnt.append(_dfs_1(cu, cv, 0))
+        cnt.append(_dfs_1(cv, cu, 0))
 
     sig, count = 0, 0
     for _, ci in cnt:
@@ -98,8 +96,6 @@ def count_diameter(n, G):
         sig += ci
     return (cu, cv), count
 
-
-##############################
 
 n = int(input())
 G = [[] for _ in range(n)]
@@ -117,8 +113,3 @@ print("-------------------")
 print(tree_centre(n, G))
 print("-------------------")
 print(count_diameter(n, G))
-
-
-######prefix######
-# Lib_GT_木の直径
-##############end##############
