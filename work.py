@@ -1,115 +1,127 @@
 import sys
-from collections import deque
 
 sys.setrecursionlimit(1000_000_000)
 
 
-def _bfs(n, G, root=0):
-    """ルートからBFS、最後に訪れたノードが最遠となる"""
-    _depth: list[int] = [-1] * n
-    q: deque[int] = deque()
-    q.append(root)
-    _depth[root] = 0
-    _parent: list[int] = [-1] * n
-    farthest_node: int = root
-    while q:
-        cur: int = q.popleft()
-        dep: int = _depth[cur]
-        for nxt in G[cur]:
-            if _depth[nxt] != -1:
+class HLD_Pathquery:
+    def __init__(
+        self,
+        n: int,
+        G,
+        # G: list[list[int | tuple[int, int]]],
+        root=0,
+    ) -> None:
+
+        self.n: int = n
+        self.G = G
+        # self.G: list[list[int | tuple[int, int]]] = G
+        self.root = root
+
+        self.parent: list[int] = [-1] * n
+        self.depth: list[int] = [-1] * n
+        self.size: list[int] = [0] * n
+        self.head = [0] * n
+        # 属するheavy pathの先頭
+        self.heavy = [-1] * n
+        # vのheavy child
+        self.pos = [-1] * n
+        # vの配列位置
+        self.vertex = []
+        # 逆変換　vertex[pos[v]] = v
+        self._dfs1(self.root, p=-1)
+        self._dfs2(self.root, p=-1)
+
+    def __str__(self) -> str:
+        rows = [
+            f"{self.__class__.__name__}(n={self.n}, root={self.root})",
+            "",
+            " v | id | par dep siz hvy hed || id | vertex",
+            "---+-----+--------------------++------------",
+        ]
+
+        for v in range(self.n):
+            rows.append(
+                f"{v:2d} | "
+                f"{self.pos[v]:2d} | "
+                f"{self.parent[v]:3d} "
+                f"{self.depth[v]:3d} "
+                f"{self.size[v]:3d} "
+                f"{self.heavy[v]:3d} "
+                f"{self.head[v]:3d} || "
+                f"{v:2d} | "
+                f"{self.vertex[v]:3d}"
+            )
+
+        return "\n".join(rows)
+
+    def _dfs1(self, v: int, p: int) -> None:
+        self.size[v] = 1
+        self.parent[v] = p
+        self.depth[v] = 0 if p == -1 else self.depth[p] + 1
+        largest = 0
+        for i in range(len(self.G[v])):
+            nv = self.G[v][i]
+            if not isinstance(nv, int):
+                nv, _ = nv
+            if nv == p:
                 continue
-            q.append(nxt)
-            newdep: int = dep + 1
-            _depth[nxt] = newdep
-            _parent[nxt] = cur
-            farthest_node = nxt
-    return farthest_node, _depth[farthest_node], _depth, _parent
+            self._dfs1(nv, v)
+            nvc = self.size[nv]
+            self.size[v] += nvc
+            if largest < nvc:
+                largest = nvc
+                self.G[v][0], self.G[v][i] = self.G[v][i], self.G[v][0]
+                self.heavy[v] = nv
 
-
-def tree_diameter(n, G) -> tuple[int, int, int, list[int], list[int]]:
-    """u, v:直径のノード二組"""
-    """diam:直径の長さ"""
-    """depth:uからのノードの深さ"""
-    """parent:uからの木のノードの親"""
-    u, *_ = _bfs(n, G, root=0)
-    v, diam, depth, parent = _bfs(n, G, root=u)
-    return u, v, diam, depth, parent
-
-
-def tree_heights(n, G):
-    """各頂点から最遠頂点までの距離"""
-    u, *_ = _bfs(n, G, root=0)
-    v, _, depthu, _ = _bfs(n, G, root=u)
-    _, __, depthv, __ = _bfs(n, G, root=v)
-    return [max(x, y) for x, y in zip(depthu, depthv)]
-
-
-def tree_centre(n, G) -> tuple[int, tuple[int, int]]:
-    """木の中心"""
-    """diam:直径の長さ"""
-    """centre:中心のノード"""
-    """直径が偶数の時、１つに決まる,奇数の時、２つ"""
-    _, _v, diam, _depth, _parent = tree_diameter(n, G)
-
-    halfdist: int = diam // 2
-    centre: int = _v
-    while diam - _depth[centre] < halfdist:
-        # 葉から根に向かって半径分辿る
-        centre = _parent[centre]
-
-    centres: tuple[int, int] = (_parent[centre] if diam % 2 else centre, centre)
-
-    return diam, centres
-
-
-def count_diameter(n, G):
-    """cntは中心からの各部分木の(ノード数, 最遠葉)
-    countは直径の本数
-    """
-
-    diam, (cu, cv) = tree_centre(n, G)
-
-    radius: int = diam // 2
-
-    def _dfs_1(x, p, d):
-        nodecount = 1
-        farthestleaf = d == radius
-        for nx in G[x]:
-            if nx == p:
+    def _dfs2(self, v, p) -> None:
+        self.pos[v] = len(self.vertex)
+        self.vertex.append(v)
+        for i in range(len(self.G[v])):
+            nv = self.G[v][i]
+            if not isinstance(nv, int):
+                nv, _ = nv
+            if nv == p:
                 continue
-            u, v = _dfs_1(nx, x, d + 1)
-            nodecount += u
-            farthestleaf += v
-        return nodecount, farthestleaf
+            is_heavy = i == 0
+            self.head[nv] = self.head[v] if is_heavy else nv
+            self._dfs2(nv, v)
 
-    cnt: list[tuple[int, int]] = []
-    if cu == cv:
-        for nx in G[cu]:
-            cnt.append(_dfs_1(nx, cu, 1))
-    else:
-        cnt.append(_dfs_1(cu, cv, 0))
-        cnt.append(_dfs_1(cv, cu, 0))
+    def lca(self, u: int, v: int) -> int:
+        """
+        最小共通祖先 (Lowest Common Ancestor)
+        重軽分解を用いて LCA を O(log N) で求める。
 
-    sig, count = 0, 0
-    for _, ci in cnt:
-        count += sig * ci
-        sig += ci
-    return (cu, cv), count
+        head[u] と head[v] が異なる間は、
+        より深い heavy path の先頭を親へ飛ばす。
+
+        同じ heavy path に入ったら、
+        深さの浅い方が LCA。
+
+        Parameters
+        ----------
+        u, v : int
+            ノード番号
+
+        Returns
+        -------
+        int
+            u と v の最小共通祖先
+        """
+        while self.head[u] != self.head[v]:
+            if self.pos[u] < self.pos[v]:
+                u, v = v, u
+            u = self.parent[self.head[u]]
+
+        return u if self.depth[u] < self.depth[v] else v
 
 
-n = int(input())
-G = [[] for _ in range(n)]
-for _ in range(n - 1):
-    a, b = map(int, input().split())
-    a -= 1
-    b -= 1
-    G[a].append(b)
-    G[b].append(a)
-
-print(tree_diameter(n, G))
-print("-------------------")
-print(tree_heights(n, G))
-print("-------------------")
-print(tree_centre(n, G))
-print("-------------------")
-print(count_diameter(n, G))
+N, Q = map(int, input().split())
+G = [[] for _ in range(N)]
+p = list(map(int, input().split()))
+for i in range(len(p)):
+    G[i + 1].append(p[i])
+    G[p[i]].append(i + 1)
+hld = HLD_Pathquery(N, G, 0)
+for _ in range(Q):
+    u, v = map(int, input().split())
+    print(hld.lca(u, v))

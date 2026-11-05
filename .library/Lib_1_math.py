@@ -74,6 +74,7 @@ print(z2.conjugate())
 # https://atcoder.jp/contests/abc308/tasks/abc308_c
 
 class OrderedObj:
+    """特殊な順序列を設定する"""
     def __init__(self, x):
         self.a, self.b, self.i = x
 
@@ -99,10 +100,12 @@ class OrderedObj:
 ######description######
 # Lib_sqroot
 ######body######
-def sqrt(x):
-    r = int(x**0.5) - 3
-    while (r+1)*(r+1) <= x: r += 1
+def sqrt(x: int) -> int:
+    """平方根の整数部分"""
+    r: int = int(x**0.5) - 3
+    while (r + 1) * (r + 1) <= x:
+        r += 1
     return r
 ######prefix######
-# Lib_sqroot
+# Lib_math_sqroot
 ##############end##############

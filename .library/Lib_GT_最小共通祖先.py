@@ -4,7 +4,9 @@
 # 最小共通祖先
 ######body######
 from collections import deque
-class Lca:
+
+
+class LCA:
     """Lowest Common Ancestor
 
     u, vの共通の親
@@ -17,22 +19,20 @@ class Lca:
     G : graph
     r : root
     """
-    def __init__(self, n: int, G, r:int) -> None:
-        self.n = n
-        self.root = r
-        self.edges = G
-        self.lv = n.bit_length()
-        self.p = [[None] * n for _ in range(self.lv)]
-        self.maxcost = [[0] * n for _ in range(self.lv)]
-        self._depth = [None] * n
-        self._costs = [None] * n
-        self.memodist = dict()
-        self.memocost = dict()
-        self.build()
 
-    def build(self):
-        """深さと親の設定とダブリング
-        """
+    def __init__(self, n: int, G: list[list[int | tuple[int, int]]], r: int) -> None:
+        self.n: int = n
+        self.root: int = r
+        self.edges: list[list[int | tuple[int, int]]] = G
+        self.lv: int = n.bit_length()
+        self.p: list[list[int]] = [[-1] * n for _ in range(self.lv)]
+        self.maxcost: list[list[int]] = [[0] * n for _ in range(self.lv)]
+        self._depth: list[int] = [-1] * n
+        self._costs: list[int] = [-1] * n
+        self._build()
+
+    def _build(self) -> None:
+        """深さと親の設定とダブリング"""
         # 深さと親の設定
         r = self.root
         q = deque([r])
@@ -42,118 +42,127 @@ class Lca:
             dep = self._depth[cur]
             dis = self._costs[cur]
             for nxt in self.edges[cur]:
-                if type(nxt) != int:
-                    nxt, cost = nxt
-                else:
+                if isinstance(nxt, int):
                     cost = 1
-                if self.p[0][nxt] != None: continue
+                else:
+                    nxt, cost = nxt
+                if self._depth[nxt] != -1:
+                    continue
                 q.append(nxt)
-                self._depth[nxt], self._costs[nxt], self.p[0][nxt], self.maxcost[0][nxt] = dep + 1, dis + cost, cur, cost
+                (
+                    self._depth[nxt],
+                    self._costs[nxt],
+                    self.p[0][nxt],
+                    self.maxcost[0][nxt],
+                ) = dep + 1, dis + cost, cur, cost
         # ダブリング
         for i in range(1, self.lv):
             for v in range(self.n):
-                nv = self.p[i-1][v]
-                self.p[i][v] = self.p[i-1][nv]
-                self.maxcost[i][v] = max(self.maxcost[i-1][v], self.maxcost[i-1][nv])
+                nv = self.p[i - 1][v]
+                self.p[i][v] = self.p[i - 1][nv]
+                self.maxcost[i][v] = max(
+                    self.maxcost[i - 1][v], self.maxcost[i - 1][nv]
+                )
 
+    def _lca(self, u: int, v: int) -> tuple[int, int]:
+        """
+        共通祖先とパス上最大辺を求める
 
-    def _lca(self, u, v):
-        """共通祖先, 最大辺
+        Notes
+        -----
+        辺重みは非負を仮定
+
         Parameters
         ----------
-        u, v : node
-            ノード
+        u, v : int
+            ノード番号
+
         Returns
         -------
-        int, int
-            共通祖先のノード, 最大辺
+        tuple[int, int]
+            (共通祖先, 最大辺)
         """
         _max_cost = 0
         # u,vの高さを合わせる
-        if self._depth[u] < self._depth[v]: u, v = v, u
+        if self._depth[u] < self._depth[v]:
+            u, v = v, u
         for i in range(self.lv):
-            if self._depth[u] - self._depth[v] >> i & 1:
+            if (self._depth[u] - self._depth[v]) >> i & 1:
                 _max_cost = max(_max_cost, self.maxcost[i][u])
                 u = self.p[i][u]
-        if u == v: return u, _max_cost
+        if u == v:
+            return u, _max_cost
         # u, vのギリギリ合わない高さまで昇る
-        for i in range(self.lv)[::-1]:
+        for i in reversed(range(self.lv)):
             if self.p[i][u] != self.p[i][v]:
                 _max_cost = max(_max_cost, self.maxcost[i][u], self.maxcost[i][v])
                 u = self.p[i][u]
                 v = self.p[i][v]
         return self.p[0][u], max(_max_cost, self.maxcost[0][u], self.maxcost[0][v])
 
-
-    def lca(self, u, v):
+    def lca(self, u: int, v: int) -> int:
         return self._lca(u, v)[0]
 
-
-    def max_cost(self, u, v):
+    def max_cost(self, u: int, v: int) -> int:
+        # 辺重みは非負を仮定
         return self._lca(u, v)[1]
 
+    def distance(self, u: int, v: int) -> int:
+        lca = self.lca(u, v)
+        return self._depth[u] + self._depth[v] - 2 * self._depth[lca]
 
-    def distance(self, u, v):
-        if not (u, v) in self.memodist:
-            lca = self.lca(u, v)
-            self.memodist[(u, v)] = self._depth[u] + self._depth[v] - 2 * self._depth[lca]
-        return self.memodist[(u, v)]
+    def cost(self, u: int, v: int) -> int:
+        lca = self.lca(u, v)
+        return self._costs[u] + self._costs[v] - 2 * self._costs[lca]
 
-
-    def cost(self, u, v):
-        if not (u, v) in self.memocost:
-            lca = self.lca(u, v)
-            self.memocost[(u, v)] = self._costs[u] + self._costs[v] - 2 * self._costs[lca]
-        return self.memocost[(u, v)]
-
-
-    def _la(self, x, h):
-        """h代前祖先
-        """
-        for i in range(self.lv)[::-1]:
-            if h >= 1 << i:
+    def _la(self, x: int, h: int) -> int:
+        """h代前祖先"""
+        for i in range(self.lv):
+            if h >> i & 1:
                 x = self.p[i][x]
-                h -= 1 << i
         return x
 
-
-    def jump(self, u, v, i):
+    def jump(self, u: int, v: int, kth: int) -> int:
         """
-        u -> vへのパスのk番目の頂点
+        u -> v のパス上で
+        u を 0 番目とした kth 頂点
         """
-        c = self.lca(u, v)
+        _lca = self.lca(u, v)
         du = self._depth[u]
         dv = self._depth[v]
-        dc = self._depth[c]
+        dlca = self._depth[_lca]
 
-        path_len = du - dc + dv - dc
-        if path_len < i:
+        path_len = du - dlca + dv - dlca
+        if kth < 0 or path_len < kth:
             return -1
 
-        if du - dc >= i:
-            return self._la(u, i)
+        if du - dlca >= kth:
+            return self._la(u, kth)
 
-        return self._la(v, path_len - i)
+        return self._la(v, path_len - kth)
+
 
 ########################################
 
 # n, q = map(int, input().split())
-n = int(input())
-G = [[] for _ in range(n)]
-for _ in range(n-1):
+N = int(input())
+G = [[] for _ in range(N)]
+for _ in range(N - 1):
     a, b = map(int, input().split())
-    a -= 1; b -= 1
+    a -= 1
+    b -= 1
     G[a].append(b)
     G[b].append(a)
 
-lca = Lca(n, G, 0)
+lca = LCA(N, G, 0)
 q = int(input())
 for _ in range(q):
     u, v = map(int, input().split())
-    u -= 1; v -= 1
+    u -= 1
+    v -= 1
     # u, v, k = map(int, input().split())
     # print(lca.jump(u, v, k))
-    print(lca.distance(u, v)+1)
+    print(lca.distance(u, v) + 1)
 
 ######prefix######
 # Lib_GT_最小共通祖先_LCA
