@@ -10,12 +10,11 @@
 # 遅延評価セグメント木
 
 ######body######
-from atcoder.lazysegtree import LazySegTree as LazySegTreeACL
+from atcoder.lazysegtree import LazySegTree
+
+def debug(self, )
 
 
-class LazySegTree(LazySegTreeACL):
-    def __init__(self, op, e, mapping, composition, id_, v):
-        super().__init__(op, e, mapping, composition, id_, v)
 
     def __str__(self) -> str:
         return " ".join(map(str, [self.get(i) for i in range(self._n)]))

@@ -10,27 +10,23 @@
 # - ある頂点の部分木の頂点に対するクエリを処理（頂点の重みの総和>segtree）
 # - ある頂点uがある頂点vの部分木に含まれるかを判定する（in(v)<= in(u) < out(v）)
 
-# https://atcoder.jp/contests/abc294/tasks/abc294_g
-
-# https://atcoder.jp/contests/abc187/tasks/abc187_e
 #
 
 import sys
 
 sys.setrecursionlimit(1000_000_000)
 
-
 class EulerTourSubtree:
     def __init__(
         self,
         n: int,
-        G: list[list[int | tuple[int, int]]],
+        G: list[list[int]],
         root=0,
     ) -> None:
 
         self.n: int = n
-        self.G: list[list[int | tuple[int, int]]] = G
-        self.root = root
+        self.G: list[list[int]] = G
+        self.root: int = root
 
         self.pre_order: list[int] = []
         self.depth: list[int] = [-1] * n
@@ -67,8 +63,6 @@ class EulerTourSubtree:
         # child traversal
         self.size[v] = 1
         for nv in self.G[v]:
-            if not isinstance(nv, int):
-                nv, *_ = nv
             if nv == p:
                 continue
             # dfs
