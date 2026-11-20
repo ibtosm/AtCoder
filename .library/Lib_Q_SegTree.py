@@ -1,16 +1,23 @@
 ######title######
-# セグメント木１点更新区間集約
+# セグメント木
 ######subtitle######
-# op: モノイドの演算 | e: モノイドの単位元 | v: 要素数orリスト
+# セグメント木
 ##############name##############
-# セグメント木１点更新区間集約
+# セグメント木
 ######description######
-# セグメント木１点更新区間集約
+# セグメント木
 ######body######
 
 # https://github.com/ibtosm/AtCoder/blob/main/.library/RM_SegTree.md
+
 # SegmentTree(op, e, v):
 # op: モノイド演算, e: 単位元, v: サイズまたは初期配列
+# set(p, x)            # 1点更新
+# get(p)               # 1点取得
+# prod(l, r)           # 区間集約
+# all_prod()           # 全体集約
+# max_right(l, isOk)   # セグ木上二分探索
+# min_left(r, isOk)    # セグ木上二分探索
 
 # max_right(l, isOk)
 # 区間 [l, r) の集約値 x が isOk(x) を満たす最大の r
@@ -41,9 +48,7 @@ if DEBUG:
 from atcoder.segtree import SegTree
 
 A = [1, 2, 3, 4, 5, 6, 7, 8]
-
 sgt = SegTree(lambda a, b: a + b, 0, A)
-
 f = lambda x: x < 12
 
 dump(sgt)
@@ -53,5 +58,5 @@ dump_min_left(sgt, 7, f)
 
 
 ######prefix######
-# Lib_Q_Seg_一点更新区間集約
+# Lib_Q_SegTree
 ##############end##############
