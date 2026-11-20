@@ -14,7 +14,7 @@
 ######body######
 
 
-class topological_sort:
+class TopologicalSort:
     def _nv(self, nvw) -> int:
         return nvw if type(nvw) == int else nvw[0]
 
@@ -103,7 +103,7 @@ for _ in range(M):
     w = 0
     G[a].append((b, w))
 
-ts = topological_sort(N, G)
+ts = TopologicalSort(N, G)
 
 ts.build()
 

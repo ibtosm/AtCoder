@@ -64,6 +64,28 @@ from atcoder.fenwicktree import FenwickTree
 ##############end##############
 
 ##############name##############
+# atcoder_lib_segtree
+######description######
+# ACL_segtree
+######body######
+from atcoder.segtree import SegTree
+######prefix######
+# from atcoder.segtree
+##############end##############
+
+
+##############name##############
+# atcoder_lib_lazysegtree
+######description######
+# ACL_lazysegtree
+######body######
+from atcoder.lazysegtree import LazySegTree
+######prefix######
+# from atcoder.lazysegtree
+##############end##############
+
+
+##############name##############
 # atcoder_lib_DSU
 ######description######
 # ACL_DSU

@@ -11,6 +11,7 @@
 
 from bisect import bisect
 
+
 class points_diffs:
     def __init__(self, A:list):
         self.X = sorted(A)

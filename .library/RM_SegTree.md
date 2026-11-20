@@ -36,6 +36,12 @@ e = 0
 
 ## 区間の右と左の情報を持って、区間の情報を集約するタイプ
 
+abc415_f
+
 ### https://atcoder.jp/contests/abc415/tasks/abc415_f
 
 ### https://atcoder.jp/contests/abc415/submissions/67879850
+
+### https://atcoder.jp/contests/practice2/tasks/practice2_j
+
+https://atcoder.jp/contests/practice2/submissions/68261920

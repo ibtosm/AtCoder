@@ -1,45 +1,47 @@
 ######title######
-# 順序付きリスト
+# 順序付き集合/リスト
 ######subtitle######
-# SortedList:クラス
+# SortedSet_SortedList:クラス
 
 ##############name##############
-# Sorted List
+# Sorted Set/List
 ######description######
+# SortedList を使った前後探索ユーティリティ。
+# 各関数は O(log N)。該当する要素がなければ None を返す。
+#
 ######body######
 
-from sortedcontainers import SortedList as SL
+from sortedcontainers import SortedList, SortedSet
 
 
-class SortedList(SL):
-    def __init__(self, iterable=None, key=None):
-        super().__init__(iterable, key)
-
-    def lt(self, value):
-        "Find the largest element < x, or None if it doesn't exist."
-        if self[0] < value:
-            return self[self.bisect_left(value) - 1]
+def get_lt(sl:"SortedList", x):
+    "Find the largest element < x, or None if it doesn't exist."
+    if not sl or x <= sl[0]:
         return None
+    return sl[sl.bisect_left(x) - 1]
 
-    def le(self, value):
-        "Find the largest element <= x, or None if it doesn't exist."
-        if self[0] <= value:
-            return self[self.bisect_right(value) - 1]
-        return None
 
-    def gt(self, value):
-        "Find the smallest element > x, or None if it doesn't exist."
-        if self[-1] > value:
-            return self[self.bisect_right(value)]
+def get_le(sl:"SortedList", x):
+    "Find the largest element <= x, or None if it doesn't exist."
+    if not sl or x < sl[0]:
         return None
+    return sl[sl.bisect_right(x) - 1]
 
-    def ge(self, value):
-        "Find the smallest element >= x, or None if it doesn't exist."
-        if self[-1] >= value:
-            return self[self.bisect_left(value)]
+
+def get_gt(sl:"SortedList", x):
+    "Find the smallest element > x, or None if it doesn't exist."
+    if not sl or sl[-1] <= x:
         return None
+    return sl[sl.bisect_right(x)]
+
+
+def get_ge(sl:"SortedList", x):
+    "Find the smallest element >= x, or None if it doesn't exist."
+    if not sl or sl[-1] < x:
+        return None
+    return sl[sl.bisect_left(x)]
 
 
 ######prefix######
-# Lib_D_sorted_list
+# Lib_D_sorted_set_list
 ##############end##############
