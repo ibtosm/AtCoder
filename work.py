@@ -99,6 +99,16 @@ dump(lst)
 dump_raw(lst)
 dump_values(lst)
 
+lst.apply(2, 7, 10)
+
+dump(lst)
+dump_raw(lst)
+dump_values(lst)
+
+dump(lst, 2, 7)
+
+dump_max_right(lst, 2, lambda x: x < 45)
+dump_min_left(lst, 7, lambda x: x < 40)
 
 ######prefix######
 # Lib_Q_LazySegTree

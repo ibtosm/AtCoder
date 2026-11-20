@@ -23,47 +23,46 @@ def _query_nodes(lst: "LazySegTree", ql: int, qr: int) -> list[int]:
 def _print_panel(length: int = 40) -> None:
     print("-" * length)
 
-def dump_raw(lst: "LazySegTree") -> None:
-    """内部配列 d / lz を表示"""
+def dump_raw(lst):
+    """内部配列 _d / _lz をそのまま表示"""
+
+    size = lst._size
 
     _print_panel()
     print("LazySegTree Raw")
-    print(
-        f"_n={lst._n}  "
-        f"_size={lst._size}  "
-        f"_log={lst._log}"
-    )
+    print(f"_n={lst._n}  _size={size}  _log={lst._log}")
+    print()
 
     d_w = max(len(str(x)) for x in lst._d)
     lz_w = max(len(str(x)) for x in lst._lz)
 
-    print()
     print(
         f"{'k':>3} "
-        f"{'range':>13} "
+        f"{'range':>12} "
         f"{'d':>{d_w}} "
         f"{'lz':>{lz_w}}"
     )
 
-    size = lst._size
-
     for k in range(1, 2 * size):
+
         dep = k.bit_length() - 1
         seg = size >> dep
+
         l = (k - (1 << dep)) * seg
         r = l + seg
 
         if k < size:
-            lz = lst._lz[k]
-            mark = " *" if lz != lst._id else ""
+            mark = " *" if lst._lz[k] != lst._id else ""
 
             print(
                 f"{k:>3} "
                 f"[{l:>3},{r:<3}) "
                 f"{str(lst._d[k]):>{d_w}} "
-                f"{str(lz):>{lz_w}}{mark}"
+                f"{str(lst._lz[k]):>{lz_w}}{mark}"
             )
+
         else:
+
             pad = " (pad)" if l >= lst._n else ""
 
             print(
@@ -74,17 +73,25 @@ def dump_raw(lst: "LazySegTree") -> None:
 
     _print_panel()
 
-
-def dump_values(lst: "LazySegTree") -> None:
-    """現在の実値を表示"""
+def dump_values(lst):
+    """実際の値"""
 
     vals = [lst.get(i) for i in range(lst._n)]
 
     _print_panel()
     print("Values")
-    print(vals)
-    _print_panel()
 
+    print(
+        "idx :",
+        *[f"{i:>4}" for i in range(lst._n)]
+    )
+
+    print(
+        "val :",
+        *[f"{x:>4}" for x in vals]
+    )
+
+    _print_panel()
 
 def dump(
     lst: "LazySegTree",
@@ -172,57 +179,43 @@ def dump(
 
     _print_panel()
 
-
-def dump_max_right(lst: "LazySegTree", l: int, f) -> None:
-    """max_right の結果確認"""
+def dump_max_right(lst, l, f):
 
     r = lst.max_right(l, f)
 
     _print_panel()
     print(f"max_right({l}) = {r}")
 
-    for i in range(l, r + 1):
-        if i > lst._n:
-            break
+    start = l
+    end = min(lst._n, r + 1)
+
+    for i in range(start, end + 1):
 
         x = lst.prod(l, i)
 
-        try:
-            ok = f(x)
-        except Exception:
-            ok = "ERR"
-
         print(
-            f"prod([{l},{i})) "
-            f"= {x} "
- f"-> {ok}"
+            f"prod([{l},{i})) = {x} -> {f(x)}"
+            + (" <==" if i == r else "")
         )
 
     _print_panel()
 
-
-def dump_min_left(lst: "LazySegTree", r: int, f) -> None:
-    """min_left の結果確認"""
+def dump_min_left(lst, r, f):
 
     l = lst.min_left(r, f)
 
     _print_panel()
     print(f"min_left({r}) = {l}")
 
-    for i in range(max(0, l - 1), r + 1):
+    begin = max(0, l - 1)
+
+    for i in range(begin, r + 1):
+
         x = lst.prod(i, r)
 
-        try:
-            ok = f(x)
-        except Exception:
-            ok = "ERR"
-
-        tag = " <==" if i == l else ""
-
         print(
-            f"prod([{i},{r})) "
-            f"= {x} "
-            f"-> {ok}{tag}"
+            f"prod([{i},{r})) = {x} -> {f(x)}"
+            + (" <==" if i == l else "")
         )
 
     _print_panel()

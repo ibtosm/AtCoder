@@ -2,48 +2,64 @@
 
 ## 普通の演算のモノイド
 
-### Range MAX
+### RMinQ and RAQ
 
 ```
-INF = 10**18
+INF = 10 ** 18
+op = min; e = INF;
+mp = lambda f, x: f+x
+cmp = lambda f, g: f+g
+id = 0
+```
+
+### RMaxQ and RAQ
+
+```
+INF = 10 ** 18
+op = max; e = -INF;
+mp = lambda f, x: f+x
+cmp = lambda f, g: f+g
+id = 0
+```
+
+### RSumQ and RAQ
+
+monoidは(区間合計, 区間幅)
+
+```
+op = lambda x, y: (x[0]+y[0], x[1]+y[1]); e = (0,0)
+mp = lambda f, x: (x[0]+f*x[1], x[1])
+cmp = lambda f, g: f+g
+id = 0
+```
+
+### RMinQ and RUQ
+
+```
+INF = 10 ** 18
+op = min; e = INF
+mp = lambda f, x: x if f == INF else f
+cmp = lambda f, g: g if f == INF
+id = INF
+```
+
+### RMaxQ and RUQ
+
+```
+INF = 10 ** 18
 op = max; e = -INF
+mp = lambda f, x: x if f == -INF else f
+cmp = lambda f, g: g if f == -INF
+id = -INF
 ```
 
-### Range MIN
+### RSumQ and RUQ
 
 ```
-INF = 10**18
-op = max; e = -INF
-```
-
-### Range SUM
-
-```
-op = lambda x, y: x + y; e = 0
-```
-
-### Range Prod
-
-```
-op = lambda x, y: x * y; e = 1
-```
-
-### Range Xor
-
-```
-op = lambda x, y: x ^ y; e = 0
-```
-
-### Range GCD
-
-```
-import math
-
-def op(x, y):
-    if x == 0: return y
-    if y == 0: return x
-    return math.gcd(x, y)
-e = 0
+op = lambda x, y: (x[0]+y[0], x[1]+y[1]); e = (0, 0)
+mp = lambda f, x: x if f == INF else (f*x[1], x[1])
+cmp = lambda f, g: g if f == INF
+id = INF
 ```
 
 ### 基本のmax_rightの使い方
@@ -57,3 +73,7 @@ e = 0
 ### AAL Contest 001: Let's use segtree!
 
 - https://atcoder.jp/contests/aalc001/tasks
+
+```
+
+```
